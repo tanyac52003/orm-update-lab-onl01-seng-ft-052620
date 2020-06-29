@@ -56,9 +56,13 @@ end
   end 
   
   def find_by_name(name)
-    
-  
-  end 
+    sql = <<-SQL
+    SELECT * FROM students 
+    WHERE name = ? LIMIT 1
+    SQL
+    DB[:conn].execute(sql, name, grade).map do |row|
+      self.new_from_db(row)
+  end.first 
   
     def update
       
